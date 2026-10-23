@@ -17,12 +17,12 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-import * as evc from "./encoded-video-chunk";
-import * as et from "./event-target";
-import * as libavs from "./avloader";
-import * as misc from "./misc";
-import * as vd from "./video-decoder";
-import * as vf from "./video-frame";
+import * as evc from "./encoded-video-chunk.js";
+import * as et from "./event-target.js";
+import * as libavs from "./avloader.js";
+import * as misc from "./misc.js";
+import * as vd from "./video-decoder.js";
+import * as vf from "./video-frame.js";
 
 import type * as LibAVJS from "@libav.js/types";
 

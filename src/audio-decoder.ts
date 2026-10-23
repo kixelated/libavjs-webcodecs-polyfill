@@ -17,11 +17,11 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-import * as ad from "./audio-data";
-import * as eac from "./encoded-audio-chunk";
-import * as et from "./event-target";
-import * as libavs from "./avloader";
-import * as misc from "./misc";
+import * as ad from "./audio-data.js";
+import * as eac from "./encoded-audio-chunk.js";
+import * as et from "./event-target.js";
+import * as libavs from "./avloader.js";
+import * as misc from "./misc.js";
 
 import type * as LibAVJS from "@libav.js/types";
 

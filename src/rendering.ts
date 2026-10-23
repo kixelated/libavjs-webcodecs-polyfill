@@ -17,8 +17,8 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-import * as libav from "./avloader";
-import * as vf from "./video-frame";
+import * as libav from "./avloader.js";
+import * as vf from "./video-frame.js";
 import '@ungap/global-this';
 
 import type * as LibAVJS from "@libav.js/types";

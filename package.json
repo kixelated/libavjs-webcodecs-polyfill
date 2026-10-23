@@ -2,6 +2,7 @@
   "name": "@kixelated/libavjs-webcodecs-polyfill",
   "version": "0.5.6",
   "description": "A WebCodecs polyfill (ponyfill, really), using libav.js",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
