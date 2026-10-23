@@ -247,6 +247,8 @@ export class AudioData {
         /* 3. If destFormat describes an interleaved AudioSampleFormat and
          * options.planeIndex is greater than 0, throw a RangeError. */
         const isInterleaved_ = isInterleaved(destFormat);
+        if (!isIndex(options.planeIndex))
+            throw new RangeError("Invalid plane");
         if (isInterleaved_) {
             if (options.planeIndex > 0)
                 throw new RangeError("Invalid plane");
@@ -273,7 +275,7 @@ export class AudioData {
         /* 7. If options.frameOffset is greater than or equal to frameCount,
          * throw a RangeError. */
         const frameOffset = options.frameOffset || 0;
-        if (frameOffset >= frameCount)
+        if (!isIndex(frameOffset) || frameOffset >= frameCount)
             throw new RangeError("Frame offset out of range");
 
         /* 8. Let copyFrameCount be the difference of subtracting
@@ -284,7 +286,8 @@ export class AudioData {
         if (typeof options.frameCount === "number") {
             /* 1. If options.frameCount is greater than copyFrameCount, throw a
              * RangeError. */
-            if (options.frameCount >= copyFrameCount)
+            if (!isIndex(options.frameCount) ||
+                options.frameCount > copyFrameCount)
                 throw new RangeError("Frame count out of range");
 
             // 2. Otherwise, assign options.frameCount to copyFrameCount.
@@ -333,9 +336,10 @@ export class AudioData {
         const resource = this._data;
 
         /* 8. Let planeFrames be the region of resource corresponding to
-         * options.planeIndex. */
-        const planeFrames = resource.subarray(
-            options.planeIndex * this.numberOfFrames);
+         * options.planeIndex. An interleaved resource is a single plane
+         * holding every channel. */
+        const planeFrames = isInterleaved(this.format) ? resource :
+            resource.subarray(options.planeIndex * this.numberOfFrames);
 
         const frameOffset = options.frameOffset || 0;
         const numberOfChannels = this.numberOfChannels;
@@ -345,11 +349,17 @@ export class AudioData {
          * copyElementCount samples have been copied. If destFormat does not
          * equal [[format]], convert elements to the destFormat
          * AudioSampleFormat while making the copy. */
-        if (this.format === destFormat) {
-            const dest = audioView(destFormat,
-                                   (<any> destination).buffer || destination,
-                                   (<any> destination).byteOffset || 0);
+        // A typed array needs an aligned offset, so an unaligned destination
+        // is written through a temporary copy.
+        const destBuffer = (<any> destination).buffer || destination;
+        const destOffset = (<any> destination).byteOffset || 0;
+        const aligned = destOffset % bytesPerSample_ === 0;
+        const dest = aligned ?
+            audioView(destFormat, destBuffer, destOffset) :
+            audioView(destFormat,
+                      new ArrayBuffer(bytesPerSample_ * copyElementCount), 0);
 
+        if (this.format === destFormat) {
             if (isInterleaved(destFormat)) {
                 dest.set(planeFrames.subarray(
                     frameOffset * numberOfChannels,
@@ -363,10 +373,6 @@ export class AudioData {
 
         } else {
             // Actual conversion necessary. Always to f32-planar.
-            const out = audioView(destFormat,
-                                  (<any> destination).buffer || destination,
-                                  (<any> destination).byteOffset || 0);
-
             // First work out the conversion
             let sub = 0;
             let div = 1;
@@ -393,16 +399,19 @@ export class AudioData {
                 for (let i = options.planeIndex + frameOffset * numberOfChannels, o = 0;
                      o < copyElementCount;
                      i += numberOfChannels, o++)
-                    out[o] = (planeFrames[i] - sub) / div;
+                    dest[o] = (planeFrames[i] - sub) / div;
 
             } else {
                 for (let i = frameOffset, o = 0;
                      o < copyElementCount;
                      i++, o++)
-                    out[o] = (planeFrames[i] - sub) / div;
+                    dest[o] = (planeFrames[i] - sub) / div;
             }
 
         }
+
+        if (!aligned)
+            new Uint8Array(destBuffer, destOffset).set(new Uint8Array(dest.buffer));
     }
 
     clone(): AudioData {
@@ -510,6 +519,14 @@ switch (format) {
         default:
             throw new TypeError("Invalid AudioSampleFormat");
     }
+}
+
+/**
+ * Is this a valid index or count: a non-negative integer?
+ * @param value  Value to check
+ */
+function isIndex(value: number) {
+    return Number.isSafeInteger(value) && value >= 0;
 }
 
 /**

@@ -17,11 +17,11 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-import * as ad from "./audio-data";
-import * as eac from "./encoded-audio-chunk";
-import * as et from "./event-target";
-import * as libavs from "./avloader";
-import * as misc from "./misc";
+import * as ad from "./audio-data.js";
+import * as eac from "./encoded-audio-chunk.js";
+import * as et from "./event-target.js";
+import * as libavs from "./avloader.js";
+import * as misc from "./misc.js";
 
 import type * as LibAVJS from "@libav.js/types";
 
@@ -314,22 +314,22 @@ export class AudioDecoder extends et.DequeueEventTarget {
                     break;
 
                 case libav.AV_SAMPLE_FMT_U8P:
-                    format = "u8";
+                    format = "u8-planar";
                     planar = true;
                     break;
 
                 case libav.AV_SAMPLE_FMT_S16P:
-                    format = "s16";
+                    format = "s16-planar";
                     planar = true;
                     break;
 
                 case libav.AV_SAMPLE_FMT_S32P:
-                    format = "s32";
+                    format = "s32-planar";
                     planar = true;
                     break;
 
                 case libav.AV_SAMPLE_FMT_FLTP:
-                    format = "f32";
+                    format = "f32-planar";
                     planar = true;
                     break;
 

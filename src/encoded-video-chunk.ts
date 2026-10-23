@@ -17,7 +17,7 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-import * as eac from "./encoded-audio-chunk";
+import * as eac from "./encoded-audio-chunk.js";
 
 export type EncodedVideoChunk = eac.EncodedAudioChunk;
 export const EncodedVideoChunk = eac.EncodedAudioChunk;

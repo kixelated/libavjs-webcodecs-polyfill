@@ -17,21 +17,21 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-import * as eac from "./encoded-audio-chunk";
-import * as ad from "./audio-data";
-import * as adec from "./audio-decoder";
-import * as aenc from "./audio-encoder";
+import * as eac from "./encoded-audio-chunk.js";
+import * as ad from "./audio-data.js";
+import * as adec from "./audio-decoder.js";
+import * as aenc from "./audio-encoder.js";
 
-import * as evc from "./encoded-video-chunk";
-import * as vf from "./video-frame";
-import * as vdec from "./video-decoder";
-import * as venc from "./video-encoder";
+import * as evc from "./encoded-video-chunk.js";
+import * as vf from "./video-frame.js";
+import * as vdec from "./video-decoder.js";
+import * as venc from "./video-encoder.js";
 
-import * as rendering from "./rendering";
+import * as rendering from "./rendering.js";
 
-import * as config from "./config";
-import * as libav from "./avloader";
-import * as misc from "./misc";
+import * as config from "./config.js";
+import * as libav from "./avloader.js";
+import * as misc from "./misc.js";
 
 import type * as LibAVJS from "@libav.js/types";
 import '@ungap/global-this';
