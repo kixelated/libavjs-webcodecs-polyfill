@@ -1,6 +1,6 @@
 {
   "name": "@kixelated/libavjs-webcodecs-polyfill",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "A WebCodecs polyfill (ponyfill, really), using libav.js",
   "exports": {
     ".": {
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ennuicastr/libavjs-webcodecs-polyfill.git"
+    "url": "git+https://github.com/kixelated/libavjs-webcodecs-polyfill.git"
   },
   "keywords": [
     "webcodecs",
@@ -31,9 +31,9 @@
   "author": "Yahweasel",
   "license": "0BSD",
   "bugs": {
-    "url": "https://github.com/ennuicastr/libavjs-webcodecs-polyfill/issues"
+    "url": "https://github.com/kixelated/libavjs-webcodecs-polyfill/issues"
   },
-  "homepage": "https://github.com/ennuicastr/libavjs-webcodecs-polyfill#readme",
+  "homepage": "https://github.com/kixelated/libavjs-webcodecs-polyfill#readme",
   "dependencies": {
     "@libav.js/types": "^6.7.7",
     "@ungap/global-this": "^0.4.4"
